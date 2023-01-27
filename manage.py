@@ -46,10 +46,28 @@ def mainget():
         User = request.form['User']
         Content = request.form['Content']
         Content = Content.replace(" ", "&nbsp;")
-        Content = Content.replace("\n", "<br>")
+        Content_lines = Content.split("\n")
+
+        content = []
+        
+        #Content = Content.replace("\n", "<br>")
+        for line in Content_lines:
+            if "IMAGE=" in line:
+                try:
+                    linet = line.split("'")
+                    url = linet[1]
+                    line = f'<img src="{url}">'
+                    content.append(line)
+                except:
+                    content.append(line)
+            else:
+                content.append(line)
+
+        Content = '<br>'.join(content)
+
         add_to_file(Content=Content, heading=title, User=User)
     
     return render_template('index.html')
 
 if __name__ == '__main__':
-    app.run(port=80, debug=True)
+    app.run(port=5000, debug=True)
