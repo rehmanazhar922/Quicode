@@ -19,7 +19,7 @@ def add_to_file(Content, heading, User):
 
 '''
 
-    file = open('templates\index.html', 'r')
+    file = open('templates/index.html', 'r')
     FileData = file.read()
     file.close()
     FileData = FileData.replace(from_replace, html_to_replace)                  #  replace(" ", "&nbsp;")
@@ -45,7 +45,7 @@ def mainget():
         title = request.form['title']
         User = request.form['User']
         Content = request.form['Content']
-        Content = Content.replace(" ", "&nbsp;")
+        
         Content_lines = Content.split("\n")
 
         content = []
@@ -64,6 +64,7 @@ def mainget():
                 content.append(line)
 
         Content = '<br>'.join(content)
+        Content = Content.replace(" ", "&nbsp;")
 
         add_to_file(Content=Content, heading=title, User=User)
     
